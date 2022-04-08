@@ -1,0 +1,59 @@
+{
+  "name": "@oblivion-libs/api",
+  "description": "Node client and models for Oblivion API",
+  "repository": "https://github.com/DeadGamesInc/oblivion-api-client.git",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "author": "Dead Games Inc.",
+  "license": "MIT",
+  "scripts": {
+    "analyze": "source-map-explorer 'dist/*.js'",
+    "build": "tsc",
+    "prepublishOnly": "tsc",
+    "lint": "eslint 'src/**/*.{js,ts}'",
+    "format:check": "prettier --check --loglevel error 'src/**/*.{js,ts}'",
+    "format:write": "prettier --write 'src/**/*.{js,ts}'",
+    "test": "jest"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "js",
+      "ts"
+    ],
+    "roots": ["src"],
+    "moduleDirectories": ["node_modules", "src"]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
+    "@pancakeswap-libs/eslint-config-pancake": "^1.0.1",
+    "@types/jest": "^27.4.1",
+    "@types/node-fetch": "^2.6.1",
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "eslint": "^8.13.0",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "prettier": "^2.6.2",
+    "source-map-explorer": "^2.5.2",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "bignumber.js": "^9.0.0",
+    "node-fetch": "^2.6.1"
+  }
+}
