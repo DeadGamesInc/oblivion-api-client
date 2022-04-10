@@ -1,7 +1,7 @@
 import getHttpEndpointForChain from 'config'
 import OblivionAPI from 'model/api'
 import { Listing, Offer, OfferList } from 'model/listing'
-import HTTPAPICaller from 'utils/http'
+import { HTTPAPICaller, getReturnUndefinedOn404Config } from 'utils/http'
 import { DEFAULT_CLIENT_CONFIG, OblivionClientConfig } from './types'
 
 interface OblivionHTTPClientConfig extends OblivionClientConfig {
@@ -49,7 +49,7 @@ export default class OblivionHTTPClient implements OblivionAPI {
   }
 
   getListing(listingId: number): Promise<Listing | undefined> {
-    return this.http.get(join('getListing', listingId))
+    return this.http.get(join('getListing', listingId), getReturnUndefinedOn404Config())
   }
 
   getUserListings(walletAddress: string): Promise<Listing[]> {
@@ -65,7 +65,7 @@ export default class OblivionHTTPClient implements OblivionAPI {
   }
 
   getOffer(listingId: number, paymentTokenAddress: string, offerId: number): Promise<Offer | undefined> {
-    return this.http.get(join('getOffer', listingId, paymentTokenAddress, offerId))
+    return this.http.get(join('getOffer', listingId, paymentTokenAddress, offerId), getReturnUndefinedOn404Config())
   }
 
   getOffers(listingId: number): Promise<OfferList> {
