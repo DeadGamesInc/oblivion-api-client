@@ -1,4 +1,5 @@
 import fetch, { Response } from 'node-fetch'
+import urlJoin from './urlJoin'
 
 export interface CallConfig<T> {
   /**
@@ -12,14 +13,14 @@ export const getReturnUndefinedOn404Config = <T>(): CallConfig<T> => ({
 })
 
 export class HTTPAPICaller {
-  private readonly endpoint: string
+  private readonly apiBaseUrl: string
 
-  constructor(endpoint: string) {
-    this.endpoint = endpoint
+  constructor(baseUrl: string) {
+    this.apiBaseUrl = baseUrl
   }
 
   private getUrl(apiPath: string): string {
-    return `${this.endpoint}${apiPath}`
+    return urlJoin(this.apiBaseUrl, apiPath)
   }
 
   private processErrorResponse = <T>(response: Response, config?: CallConfig<T>): T => {

@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 
-import getHttpEndpointForChain from 'config'
+import { getApiBaseUrl } from 'config/http'
 import OblivionAPI from 'model/api'
 import { Listing, Offer } from 'model/listing'
 import { HTTPAPICaller, getReturnUndefinedOn404Config } from 'utils/http'
@@ -40,12 +40,7 @@ export default class OblivionHTTPClient implements OblivionAPI {
   constructor(config: OblivionHTTPClientConfig = DEFAULT_CLIENT_CONFIG) {
     const { chainId, endpointOverride } = config
 
-    let endpoint = endpointOverride
-    if (!endpoint) {
-      endpoint = getHttpEndpointForChain(chainId)
-    }
-
-    this.http = new HTTPAPICaller(endpoint)
+    this.http = new HTTPAPICaller(getApiBaseUrl(chainId, endpointOverride))
   }
 
   private callPluralApi = async <R, T>(api: string, resultMapper: (raw: R) => T): Promise<T[]> => {
