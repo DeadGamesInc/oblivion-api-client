@@ -1,8 +1,39 @@
+import { resolve } from 'path'
+import { matchersWithOptions } from 'jest-json-schema'
+import * as TJS from 'typescript-json-schema'
+
 import OblivionHTTPClient from './http'
-import { ChainId } from '../model/chain'
+import { ChainId, Listing, Offer } from '../model'
+
+expect.extend(
+  matchersWithOptions({
+    verbose: true,
+  }),
+)
+
+// Generate json type schema for Typescript interfaces
+const tjsProgram = TJS.getProgramFromFiles([resolve('src/model/index.ts')], { strictNullChecks: true })
+
+const schemaProvider = TJS.buildGenerator(tjsProgram)
+if (!schemaProvider) {
+  throw new TypeError('Null schema generator')
+}
+
+const client = new OblivionHTTPClient({ chainId: ChainId.BSCTestnet })
 
 describe('Listing APIs', () => {
-  const client = new OblivionHTTPClient({ chainId: ChainId.BSCTestnet })
+  const assertValidListing = (listing: Listing) =>
+    expect(listing).toMatchSchema(schemaProvider.getSchemaForSymbol('Listing'))
+  const assertValidListings = (listings: Listing[]) => {
+    expect(listings).not.toBeUndefined()
+    expect(listings.length).toBeGreaterThan(0)
+    listings.forEach((listing) => assertValidListing(listing))
+  }
+
+  const assertValidOffer = (offer: Offer | undefined) => {
+    expect(offer).not.toBeUndefined()
+    expect(offer).toMatchSchema(schemaProvider.getSchemaForSymbol('Offer'))
+  }
 
   it('getTotalListings', async () => {
     const totalListings = await client.getTotalListings()
@@ -11,47 +42,47 @@ describe('Listing APIs', () => {
 
   it('getListings', async () => {
     const listings = await client.getListings()
-    expect(listings.length).toBeGreaterThan(0)
+    assertValidListings(listings)
   })
 
   it('getOpenListings', async () => {
     const listings = await client.getOpenListings()
-    expect(listings.length).toBeGreaterThan(0)
+    assertValidListings(listings)
   })
 
   it('getClosedListings', async () => {
     const listings = await client.getClosedListings()
-    expect(listings.length).toBeGreaterThan(0)
+    assertValidListings(listings)
   })
 
   it('getSoldListings', async () => {
     const listings = await client.getSoldListings()
-    expect(listings.length).toBeGreaterThan(0)
+    assertValidListings(listings)
   })
 
   it('getListingsByNft', async () => {
     const listings = await client.getListingsByNft('0x7A8F23c7545b4a97B15153DeB430E41b481cEA12')
-    expect(listings.length).toBeGreaterThan(0)
+    assertValidListings(listings)
   })
 
   it('getOpenListingsByNft', async () => {
     const listings = await client.getOpenListingsByNft('0x7A8F23c7545b4a97B15153DeB430E41b481cEA12')
-    expect(listings.length).toBeGreaterThan(0)
+    assertValidListings(listings)
   })
 
   it('getUserListings', async () => {
     const listings = await client.getUserListings('0xe8CDE3F69D7d3CAadfB2789B1A3DB60A8E70cc40')
-    expect(listings.length).toBeGreaterThan(0)
+    assertValidListings(listings)
   })
 
   it('getUserListingsWithOpenOffers', async () => {
     const listings = await client.getUserListingsWithOpenOffers('0xe8CDE3F69D7d3CAadfB2789B1A3DB60A8E70cc40')
-    expect(listings.length).toBeGreaterThan(0)
+    assertValidListings(listings)
   })
 
   it('getUserOpenListings', async () => {
     const listings = await client.getUserOpenListings('0xe8CDE3F69D7d3CAadfB2789B1A3DB60A8E70cc40')
-    expect(listings.length).toBeGreaterThan(0)
+    assertValidListings(listings)
   })
 
   it('getListing', async () => {
@@ -59,6 +90,7 @@ describe('Listing APIs', () => {
     const listing = await client.getListing(listingId)
 
     expect(listing).not.toBeUndefined()
+    assertValidListing(listing as Listing)
     expect(listing?.id).toEqual(listingId)
   })
 
@@ -69,18 +101,20 @@ describe('Listing APIs', () => {
 
   it('getOffers', async () => {
     const offers = await client.getOffers(2)
-    expect(Object.entries(offers).length).toBeGreaterThan(0)
+
+    expect(offers.length).toBeGreaterThan(0)
+    offers.forEach(assertValidOffer)
   })
 
   it('getOpenOffers', async () => {
     const offers = await client.getOpenOffers(0)
-    expect(Object.entries(offers).length).toBeGreaterThan(0)
+
+    expect(offers.length).toBeGreaterThan(0)
+    offers.forEach(assertValidOffer)
   })
 
   it('getOffer', async () => {
     const offer = await client.getOffer(0, '0x0000000000000000000000000000000000000000', 0)
-
-    expect(offer).not.toBeUndefined()
-    expect(offer?.id).toEqual(0)
+    assertValidOffer(offer)
   })
 })
