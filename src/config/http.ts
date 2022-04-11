@@ -7,8 +7,8 @@ const endpoints: Record<ChainId, string> = {
 }
 
 const basePaths: Record<ChainId, string> = {
-  [ChainId.BSC]: 'oblivion/bsc',
-  [ChainId.BSCTestnet]: 'oblivion/bsc_testnet',
+  [ChainId.BSC]: 'bsc',
+  [ChainId.BSCTestnet]: 'bsc_testnet',
 }
 
 export const getApiEndpoint = (chainId: ChainId): string => endpoints[chainId]
