@@ -4,6 +4,7 @@ import { getApiBaseUrl } from 'config/http'
 import OblivionAPI from 'model/api'
 import { Listing, Offer } from 'model/listing'
 import { HTTPAPICaller, getReturnUndefinedOn404Config } from 'utils/http'
+import Sale from '../model/sale'
 import { DEFAULT_CLIENT_CONFIG, OblivionClientConfig } from './types'
 
 interface OblivionHTTPClientConfig extends OblivionClientConfig {
@@ -33,6 +34,18 @@ const toOffer = (rawOffer: RawOffer): Offer =>
     amount: new BigNumber(rawOffer.amount),
     discount: new BigNumber(rawOffer.discount),
   }
+
+interface RawSale extends Omit<Sale, 'amount' | 'createDate' | 'saleDate'> {
+  amount: BigNumber
+  createDate: string
+  saleDate: string
+}
+const toSale = (rawSale: RawSale): Sale => ({
+  ...rawSale,
+  amount: new BigNumber(rawSale.amount),
+  createDate: new Date(rawSale.createDate).valueOf(),
+  saleDate: new Date(rawSale.saleDate).valueOf(),
+})
 
 export default class OblivionHTTPClient implements OblivionAPI {
   private readonly http: HTTPAPICaller
@@ -117,5 +130,10 @@ export default class OblivionHTTPClient implements OblivionAPI {
 
   getTotalOffers(listingId: number): Promise<number> {
     return this.http.get(join('getTotalOffers', listingId))
+  }
+
+  async getSales(): Promise<Sale[]> {
+    const sales: RawSale[] = await this.http.get('getSales')
+    return sales.map(toSale)
   }
 }

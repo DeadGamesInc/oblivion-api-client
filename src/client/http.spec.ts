@@ -118,3 +118,10 @@ describe('Listing APIs', () => {
     assertValidOffer(offer)
   })
 })
+
+describe('Sales APIs', () => {
+  it('getSales', async () => {
+    const sales = await client.getSales()
+    sales.forEach((sale) => expect(sale).toMatchSchema(schemaProvider.getSchemaForSymbol('Sale')))
+  })
+})
