@@ -1,29 +1,34 @@
-import BigNumber from 'bignumber.js'
+import { Address } from './common'
 
 export interface NftTokenAttribute {
   traitType: string
   value: any
 }
 
-export interface NftToken {
-  id: BigNumber
+export interface NftTokenMetadata {
   name: string
   description: string
-  attributes: NftTokenAttribute[]
-  image: string
   externalUrl: string
+  image: string
+  attributes: NftTokenAttribute[]
+}
+
+export interface NftToken {
+  id: number
+  uri: string
+  metadata: NftTokenMetadata
 }
 
 export interface NftCollectionInfo {
   id: number
-  index: BigNumber
+  index: number
   inCollection: boolean
 }
 
 export interface Nft {
+  address: Address
   name: string
   symbol: string
-  address: string
-  token: NftToken
-  collectionInfo: NftCollectionInfo
+  uri: string
+  metadata?: NftTokenMetadata
 }

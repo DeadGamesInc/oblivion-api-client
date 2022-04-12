@@ -125,3 +125,28 @@ describe('Sales APIs', () => {
     sales.forEach((sale) => expect(sale).toMatchSchema(schemaProvider.getSchemaForSymbol('Sale')))
   })
 })
+
+describe('NFT APIs', () => {
+  it('getNft', async () => {
+    const nft = await client.getNft('0x7A8F23c7545b4a97B15153DeB430E41b481cEA12')
+    expect(nft).toMatchSchema(schemaProvider.getSchemaForSymbol('Nft'))
+  })
+
+  it('getNftTokenMetadata', async () => {
+    const token = await client.getNftToken('0x7A8F23c7545b4a97B15153DeB430E41b481cEA12', 1)
+    expect(token).toMatchSchema(schemaProvider.getSchemaForSymbol('NftToken'))
+  })
+
+  it('getNftTokenMetadatas', async () => {
+    const tokenIds = [1, 2, 3]
+    const tokens = await client.getNftTokens('0x7A8F23c7545b4a97B15153DeB430E41b481cEA12', tokenIds)
+
+    expect(tokens).not.toBeUndefined()
+    expect(tokens.length).toBeGreaterThan(0)
+    tokenIds.forEach((tokenId, i) => {
+      const token = tokens[i]
+      expect(token).toMatchSchema(schemaProvider.getSchemaForSymbol('NftToken'))
+      expect(token.id).toEqual(tokenId)
+    })
+  })
+})

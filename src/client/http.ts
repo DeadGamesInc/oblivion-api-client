@@ -4,6 +4,7 @@ import { getApiBaseUrl } from 'config/http'
 import OblivionAPI from 'model/api'
 import { Listing, Offer } from 'model/listing'
 import { HTTPAPICaller, getReturnUndefinedOn404Config } from 'utils/http'
+import { Nft, NftToken } from '../model'
 import Sale from '../model/sale'
 import { DEFAULT_CLIENT_CONFIG, OblivionClientConfig } from './types'
 
@@ -46,6 +47,15 @@ const toSale = (rawSale: RawSale): Sale => ({
   createDate: new Date(rawSale.createDate).valueOf(),
   saleDate: new Date(rawSale.saleDate).valueOf(),
 })
+
+interface RawNftToken extends Omit<NftToken, 'id'> {
+  tokenId: number
+}
+const toNftToken = (rawToken: RawNftToken): NftToken =>
+  rawToken && {
+    ...rawToken,
+    id: rawToken.tokenId,
+  }
 
 export default class OblivionHTTPClient implements OblivionAPI {
   private readonly http: HTTPAPICaller
@@ -135,5 +145,23 @@ export default class OblivionHTTPClient implements OblivionAPI {
   async getSales(): Promise<Sale[]> {
     const sales: RawSale[] = await this.http.get('getSales')
     return sales.map(toSale)
+  }
+
+  getNft(nftContractAddress: string): Promise<Nft | undefined> {
+    return this.http.get(join('getNft', nftContractAddress), getReturnUndefinedOn404Config())
+  }
+
+  async getNftToken(nftContractAddress: string, tokenId: number): Promise<NftToken | undefined> {
+    const token: RawNftToken = await this.http.get(
+      join('getNftTokenURI', nftContractAddress, tokenId),
+      getReturnUndefinedOn404Config(),
+    )
+
+    return toNftToken(token)
+  }
+
+  async getNftTokens<K extends number[]>(nftContractAddress: string, tokenIds: K): Promise<NftToken[]> {
+    const tokens: RawNftToken[] = await this.http.post(join('getNftTokenURIs', nftContractAddress), tokenIds)
+    return tokens.map(toNftToken)
   }
 }

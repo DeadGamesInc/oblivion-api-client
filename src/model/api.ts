@@ -1,4 +1,5 @@
 import { Listing, Offer } from './listing'
+import { Nft, NftToken } from './nft'
 import Sale from './sale'
 
 export interface OblivionListingAPI {
@@ -23,5 +24,10 @@ export interface OblivionSalesAPI {
   getSales: () => Promise<Sale[]>
 }
 
-export default interface OblivionAPI extends OblivionListingAPI, OblivionSalesAPI {
+export interface OblivionNftAPI {
+  getNft: (nftContractAddress: string) => Promise<Nft | undefined>
+  getNftToken: (nftContractAddress: string, tokenId: number) => Promise<NftToken | undefined>
+  getNftTokens: (nftContractAddress: string, tokenIds: number[]) => Promise<NftToken[]>
 }
+
+export default interface OblivionAPI extends OblivionListingAPI, OblivionSalesAPI, OblivionNftAPI {}
