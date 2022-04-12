@@ -160,7 +160,7 @@ export default class OblivionHTTPClient implements OblivionAPI {
     return toNftToken(token)
   }
 
-  async getNftTokens<K extends number[]>(nftContractAddress: string, tokenIds: K): Promise<NftToken[]> {
+  async getNftTokens(nftContractAddress: string, tokenIds: number[]): Promise<NftToken[]> {
     const tokens: RawNftToken[] = await this.http.post(join('getNftTokenURIs', nftContractAddress), tokenIds)
     return tokens.map(toNftToken)
   }
