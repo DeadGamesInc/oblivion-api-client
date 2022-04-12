@@ -4,6 +4,7 @@ import { getApiBaseUrl } from 'config/http'
 import OblivionAPI from 'model/api'
 import { Listing, Offer } from 'model/listing'
 import { HTTPAPICaller, getReturnUndefinedOn404Config } from 'utils/http'
+import Collection from 'model/collection'
 import { Nft, NftToken } from '../model'
 import Sale from '../model/sale'
 import { DEFAULT_CLIENT_CONFIG, OblivionClientConfig } from './types'
@@ -66,7 +67,7 @@ export default class OblivionHTTPClient implements OblivionAPI {
     this.http = new HTTPAPICaller(getApiBaseUrl(chainId, endpointOverride))
   }
 
-  private callPluralApi = async <R, T>(api: string, resultMapper: (raw: R) => T): Promise<T[]> => {
+  private callPluralApi = async <R, T>(api: string, resultMapper?: (raw: R) => T): Promise<T[]> => {
     const results: R[] = await this.http.get(api)
     return resultMapper ? results.map(resultMapper) : (results as unknown as T[])
   }
@@ -163,5 +164,17 @@ export default class OblivionHTTPClient implements OblivionAPI {
   async getNftTokens(nftContractAddress: string, tokenIds: number[]): Promise<NftToken[]> {
     const tokens: RawNftToken[] = await this.http.post(join('getNftTokenURIs', nftContractAddress), tokenIds)
     return tokens.map(toNftToken)
+  }
+
+  getTotalCollections(): Promise<number> {
+    return this.http.get('getTotalCollections')
+  }
+
+  getCollections(): Promise<Collection[]> {
+    return this.callPluralApi('getCollections')
+  }
+
+  getCollection(collectionId: number): Promise<Collection | undefined> {
+    return this.http.get(join('getCollection', collectionId), getReturnUndefinedOn404Config())
   }
 }

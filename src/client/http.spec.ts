@@ -14,7 +14,9 @@ expect.extend(
 // Generate json type schema for Typescript interfaces
 const tjsProgram = TJS.getProgramFromFiles([resolve('src/model/index.ts')], { strictNullChecks: true })
 
-const schemaProvider = TJS.buildGenerator(tjsProgram)
+const schemaProvider = TJS.buildGenerator(tjsProgram, {
+  required: true,
+})
 if (!schemaProvider) {
   throw new TypeError('Null schema generator')
 }
@@ -132,9 +134,10 @@ describe('NFT APIs', () => {
     expect(nft).toMatchSchema(schemaProvider.getSchemaForSymbol('Nft'))
   })
 
+  const nftTokenSchema = schemaProvider.getSchemaForSymbol('NftToken')
   it('getNftTokenMetadata', async () => {
     const token = await client.getNftToken('0x7A8F23c7545b4a97B15153DeB430E41b481cEA12', 1)
-    expect(token).toMatchSchema(schemaProvider.getSchemaForSymbol('NftToken'))
+    expect(token).toMatchSchema(nftTokenSchema)
   })
 
   it('getNftTokenMetadatas', async () => {
@@ -145,8 +148,28 @@ describe('NFT APIs', () => {
     expect(tokens.length).toBeGreaterThan(0)
     tokenIds.forEach((tokenId, i) => {
       const token = tokens[i]
-      expect(token).toMatchSchema(schemaProvider.getSchemaForSymbol('NftToken'))
+      expect(token).toMatchSchema(nftTokenSchema)
       expect(token.id).toEqual(tokenId)
     })
+  })
+})
+
+describe('Collection APIs', () => {
+  it('getTotalCollections', async () => {
+    const totalCollections = await client.getTotalCollections()
+    expect(totalCollections).toBeGreaterThan(0)
+  })
+
+  const collectionSchema = schemaProvider.getSchemaForSymbol('Collection')
+  it('getCollections', async () => {
+    const collections = await client.getCollections()
+    collections.forEach((collection) => expect(collection).toMatchSchema(collectionSchema))
+  })
+
+  it('getCollection', async () => {
+    const collection = await client.getCollection(0)
+
+    expect(collection).not.toBeUndefined()
+    expect(collection).toMatchSchema(collectionSchema)
   })
 })

@@ -1,5 +1,6 @@
 export * from './api'
 export * from './chain'
+export * from './collection'
 export * from './nft'
 export * from './listing'
 export * from './sale'
