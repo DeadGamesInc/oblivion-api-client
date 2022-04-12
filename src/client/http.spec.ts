@@ -173,3 +173,28 @@ describe('Collection APIs', () => {
     expect(collection).toMatchSchema(collectionSchema)
   })
 })
+
+describe('Release APIs', () => {
+  it('getTotalReleases', async () => {
+    const totalReleases = await client.getTotalReleases()
+    expect(totalReleases).toBeGreaterThan(0)
+  })
+
+  const releaseSchema = schemaProvider.getSchemaForSymbol('Release')
+  it('getReleases', async () => {
+    const releases = await client.getReleases()
+
+    expect(releases).not.toBeUndefined()
+    expect(releases.length).toBeGreaterThan(0)
+    releases.forEach((release) => expect(release).toMatchSchema(releaseSchema))
+  })
+
+  it('getRelease', async () => {
+    const releaseId = 1
+    const release = await client.getRelease(1)
+
+    expect(release).toMatchSchema(releaseSchema)
+    expect(release).not.toBeUndefined()
+    expect(release!.id).toEqual(releaseId)
+  })
+})

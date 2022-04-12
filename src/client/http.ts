@@ -6,6 +6,7 @@ import { Listing, Offer } from 'model/listing'
 import { HTTPAPICaller, getReturnUndefinedOn404Config } from 'utils/http'
 import Collection from 'model/collection'
 import { Nft, NftToken } from '../model'
+import Release from '../model/release'
 import Sale from '../model/sale'
 import { DEFAULT_CLIENT_CONFIG, OblivionClientConfig } from './types'
 
@@ -56,6 +57,22 @@ const toNftToken = (rawToken: RawNftToken): NftToken =>
   rawToken && {
     ...rawToken,
     id: rawToken.tokenId,
+  }
+
+interface RawRelease extends Omit<Release, 'price' | 'endDate'> {
+  price: number
+  endDate: string
+  treasuryAddresses: string[]
+  treasuryAllocations: number[]
+}
+const toRelease = (rawRelease: RawRelease): Release =>
+  rawRelease && {
+    ...rawRelease,
+    price: new BigNumber(rawRelease.price),
+    endDate: parseInt(rawRelease.endDate),
+    treasury: Object.fromEntries(
+      rawRelease.treasuryAddresses.map((address, i) => [address, rawRelease.treasuryAllocations[i]]),
+    ),
   }
 
 export default class OblivionHTTPClient implements OblivionAPI {
@@ -176,5 +193,18 @@ export default class OblivionHTTPClient implements OblivionAPI {
 
   getCollection(collectionId: number): Promise<Collection | undefined> {
     return this.http.get(join('getCollection', collectionId), getReturnUndefinedOn404Config())
+  }
+
+  getTotalReleases(): Promise<number> {
+    return this.http.get('getTotalReleases')
+  }
+
+  getReleases(): Promise<Release[]> {
+    return this.callPluralApi('getReleases', toRelease)
+  }
+
+  async getRelease(releaseId: number): Promise<Release | undefined> {
+    const release: RawRelease = await this.http.get(join('getRelease', releaseId), getReturnUndefinedOn404Config())
+    return toRelease(release)
   }
 }

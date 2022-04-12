@@ -1,6 +1,7 @@
 import Collection from './collection'
 import { Listing, Offer } from './listing'
 import { Nft, NftToken } from './nft'
+import Release from './release'
 import Sale from './sale'
 
 export interface OblivionListingAPI {
@@ -37,8 +38,15 @@ export interface OblivionCollectionAPI {
   getCollection: (collectionId: number) => Promise<Collection | undefined>
 }
 
+export interface OblivionReleaseAPI {
+  getTotalReleases: () => Promise<number>
+  getReleases: () => Promise<Release[]>
+  getRelease: (releaseId: number) => Promise<Release | undefined>
+}
+
 export default interface OblivionAPI
   extends OblivionListingAPI,
     OblivionSalesAPI,
     OblivionNftAPI,
+    OblivionReleaseAPI,
     OblivionCollectionAPI {}
