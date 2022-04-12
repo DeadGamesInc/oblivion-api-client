@@ -198,3 +198,14 @@ describe('Release APIs', () => {
     expect(release!.id).toEqual(releaseId)
   })
 })
+
+describe('Payment Token APIs', () => {
+  const paymentTokenSchema = schemaProvider.getSchemaForSymbol('PaymentToken')
+  it('getPaymentTokens', async () => {
+    const paymentTokens = await client.getPaymentTokens()
+
+    expect(paymentTokens).not.toBeUndefined()
+    expect(paymentTokens.length).toBeGreaterThan(0)
+    paymentTokens.forEach((paymentToken) => expect(paymentToken).toMatchSchema(paymentToken))
+  })
+})

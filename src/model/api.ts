@@ -1,6 +1,7 @@
 import Collection from './collection'
 import { Listing, Offer } from './listing'
 import { Nft, NftToken } from './nft'
+import PaymentToken from './paymentToken'
 import Release from './release'
 import Sale from './sale'
 
@@ -44,9 +45,14 @@ export interface OblivionReleaseAPI {
   getRelease: (releaseId: number) => Promise<Release | undefined>
 }
 
+export interface OblivionPaymentTokenAPI {
+  getPaymentTokens: () => Promise<PaymentToken[]>
+}
+
 export default interface OblivionAPI
   extends OblivionListingAPI,
     OblivionSalesAPI,
     OblivionNftAPI,
     OblivionReleaseAPI,
+    OblivionPaymentTokenAPI,
     OblivionCollectionAPI {}

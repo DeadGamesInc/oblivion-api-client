@@ -6,6 +6,7 @@ import { Listing, Offer } from 'model/listing'
 import { HTTPAPICaller, getReturnUndefinedOn404Config } from 'utils/http'
 import Collection from 'model/collection'
 import { Nft, NftToken } from '../model'
+import PaymentToken from '../model/paymentToken'
 import Release from '../model/release'
 import Sale from '../model/sale'
 import { DEFAULT_CLIENT_CONFIG, OblivionClientConfig } from './types'
@@ -206,5 +207,9 @@ export default class OblivionHTTPClient implements OblivionAPI {
   async getRelease(releaseId: number): Promise<Release | undefined> {
     const release: RawRelease = await this.http.get(join('getRelease', releaseId), getReturnUndefinedOn404Config())
     return toRelease(release)
+  }
+
+  getPaymentTokens(): Promise<PaymentToken[]> {
+    return this.callPluralApi('getPaymentTokens')
   }
 }
