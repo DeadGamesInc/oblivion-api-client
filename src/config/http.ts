@@ -2,7 +2,7 @@ import { ChainId } from '../model'
 import urlJoin from '../utils/urlJoin'
 
 const endpoints: Record<ChainId, string> = {
-  [ChainId.BSC]: 'https://deadgamesapi.herokuapp.com',
+  [ChainId.BSC]: 'http://localhost:5001',
   [ChainId.BSCTestnet]: 'http://localhost:5001',
 }
 
