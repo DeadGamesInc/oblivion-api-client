@@ -1,4 +1,4 @@
-import { ChainId } from 'model/chain'
+import { ChainId } from '../model/chain'
 
 export interface OblivionClientConfig {
   chainId: ChainId
