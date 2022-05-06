@@ -38,7 +38,7 @@ export interface Listing {
   targetPrice: BigNumber
   minimumPrice: BigNumber
   graceEnd: number
-  saleEnd: number
+  saleEnd: BigNumber
   createBlock: number
   closedBlock: number
   wasSold: boolean

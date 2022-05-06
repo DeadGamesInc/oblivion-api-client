@@ -3,7 +3,7 @@ import urlJoin from '../utils/urlJoin'
 
 const endpoints: Record<ChainId, string> = {
   [ChainId.BSC]: 'https://deadgamesapi.herokuapp.com',
-  [ChainId.BSCTestnet]: 'https://deadgamesapi.herokuapp.com',
+  [ChainId.BSCTestnet]: 'http://localhost:5001',
 }
 
 const basePaths: Record<ChainId, string> = {

@@ -28,7 +28,7 @@ export class HTTPAPICaller {
       return <T>config.default404ReturnValue
     }
 
-    throw new Error(`Request failed with status code ${response.status} - ${response.statusText}`)
+    throw new Error(`Request failed with status code ${response.status} - ${response.statusText} - ${response.url}`)
   }
 
   private processResponse = async <T>(response: Response, config?: CallConfig<T>): Promise<T> => {

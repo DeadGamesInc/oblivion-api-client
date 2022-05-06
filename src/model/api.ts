@@ -16,11 +16,11 @@ export interface OblivionListingAPI {
   getUserListings: (walletAddress: string) => Promise<Listing[]>
   getUserListingsWithOpenOffers: (walletAddress: string) => Promise<Listing[]>
   getUserOpenListings: (walletAddress: string) => Promise<Listing[]>
-  getListing: (listingId: number) => Promise<Listing | undefined>
-  getTotalOffers: (listingId: number) => Promise<number>
-  getOffers: (listingId: number) => Promise<Offer[]>
-  getOpenOffers: (listingId: number) => Promise<Offer[]>
-  getOffer: (listingId: number, paymentTokenAddress: string, offerId: number) => Promise<Offer | undefined>
+  getListing: (version: number, listingId: number) => Promise<Listing | undefined>
+  getTotalOffers: (version: number, listingId: number) => Promise<number>
+  getOffers: (version: number, listingId: number) => Promise<Offer[]>
+  getOpenOffers: (version, listingId: number) => Promise<Offer[]>
+  getOffer: (version: number, listingId: number, paymentTokenAddress: string, offerId: number) => Promise<Offer | undefined>
 }
 
 export interface OblivionSalesAPI {

@@ -17,15 +17,17 @@ interface OblivionHTTPClientConfig extends OblivionClientConfig {
 
 const join = (path: string, ...segments: any[]) => [path, ...segments].join('/')
 
-interface RawListing extends Omit<Listing, 'minimumPrice' | 'targetPrice'> {
+interface RawListing extends Omit<Listing, 'minimumPrice' | 'targetPrice' | 'saleEnd'> {
   minimumPrice: string
   targetPrice: string
+  saleEnd: string
 }
 const toListing = (rawListing: RawListing): Listing =>
   rawListing && {
     ...rawListing,
     targetPrice: new BigNumber(rawListing.targetPrice),
     minimumPrice: new BigNumber(rawListing.minimumPrice),
+    saleEnd: new BigNumber(rawListing.saleEnd),
   }
 
 interface RawOffer extends Omit<Offer, 'amount' | 'discount'> {
@@ -120,9 +122,8 @@ export default class OblivionHTTPClient implements OblivionAPI {
     return this.callGetListingsApi(`getOpenListingsByNft/${nftContractAddress}`)
   }
 
-  async getListing(listingId: number): Promise<Listing | undefined> {
-    const listing: RawListing = await this.http.get(join('getListing', listingId), getReturnUndefinedOn404Config())
-
+  async getListing(version: number, listingId: number): Promise<Listing | undefined> {
+    const listing: RawListing = await this.http.get(join('getListing', version, listingId), getReturnUndefinedOn404Config())
     return toListing(listing)
   }
 
@@ -140,25 +141,25 @@ export default class OblivionHTTPClient implements OblivionAPI {
 
   private callGetOffersApi = (api: string): Promise<Offer[]> => this.callPluralApi(api, toOffer)
 
-  async getOffer(listingId: number, paymentTokenAddress: string, offerId: number): Promise<Offer | undefined> {
+  async getOffer(version: number, listingId: number, paymentTokenAddress: string, offerId: number): Promise<Offer | undefined> {
     const offer: RawOffer = await this.http.get(
-      join('getOffer', listingId, paymentTokenAddress, offerId),
+      join('getOffer', version, listingId, paymentTokenAddress, offerId),
       getReturnUndefinedOn404Config(),
     )
 
     return toOffer(offer)
   }
 
-  getOffers(listingId: number): Promise<Offer[]> {
-    return this.callGetOffersApi(join('getOffers', listingId))
+  getOffers(version: number, listingId: number): Promise<Offer[]> {
+    return this.callGetOffersApi(join('getOffers', version, listingId))
   }
 
-  getOpenOffers(listingId: number): Promise<Offer[]> {
-    return this.callGetOffersApi(join('getOpenOffers', listingId))
+  getOpenOffers(version: number, listingId: number): Promise<Offer[]> {
+    return this.callGetOffersApi(join('getOpenOffers', version, listingId))
   }
 
-  getTotalOffers(listingId: number): Promise<number> {
-    return this.http.get(join('getTotalOffers', listingId))
+  getTotalOffers(version: number, listingId: number): Promise<number> {
+    return this.http.get(join('getTotalOffers', version, listingId))
   }
 
   async getSales(): Promise<Sale[]> {

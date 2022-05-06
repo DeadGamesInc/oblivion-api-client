@@ -89,34 +89,34 @@ describe('Listing APIs', () => {
 
   it('getListing', async () => {
     const listingId = 0
-    const listing = await client.getListing(listingId)
-
+    const listing = await client.getListing(1, listingId)
+    // console.log('nams', listing)
     expect(listing).not.toBeUndefined()
     assertValidListing(listing as Listing)
     expect(listing?.id).toEqual(listingId)
-  })
+   })
 
   it('getTotalOffers', async () => {
-    const totalOffers = await client.getTotalOffers(2)
+    const totalOffers = await client.getTotalOffers(1, 2)
     expect(totalOffers).toBeGreaterThan(0)
   })
 
   it('getOffers', async () => {
-    const offers = await client.getOffers(2)
+    const offers = await client.getOffers(1, 2)
 
     expect(offers.length).toBeGreaterThan(0)
     offers.forEach(assertValidOffer)
   })
 
   it('getOpenOffers', async () => {
-    const offers = await client.getOpenOffers(0)
+    const offers = await client.getOpenOffers(1, 0)
 
     expect(offers.length).toBeGreaterThan(0)
     offers.forEach(assertValidOffer)
   })
 
-  it('getOffer', async () => {
-    const offer = await client.getOffer(0, '0x0000000000000000000000000000000000000000', 0)
+  it('g', async () => {
+    const offer = await client.getOffer(1, 0, '0x0000000000000000000000000000000000000000', 0)
     assertValidOffer(offer)
   })
 })
