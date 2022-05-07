@@ -206,6 +206,16 @@ describe('Payment Token APIs', () => {
 
     expect(paymentTokens).not.toBeUndefined()
     expect(paymentTokens.length).toBeGreaterThan(0)
-    paymentTokens.forEach((paymentToken) => expect(paymentToken).toMatchSchema(paymentToken))
+    paymentTokens.forEach((paymentToken) => expect(paymentToken).toMatchSchema(paymentTokenSchema))
+  })
+})
+
+describe('Volume APIs', () => {
+  const volumeReportSchema = schemaProvider.getSchemaForSymbol('VolumeReport')
+  it('get24HourVolume', async () => {
+    const volume = await client.get24HourVolume()
+
+      expect(volume).not.toBeUndefined()
+      expect(volume).toMatchSchema(volumeReportSchema)
   })
 })

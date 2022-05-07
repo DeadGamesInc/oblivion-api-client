@@ -9,6 +9,7 @@ import PaymentToken from '../model/paymentToken'
 import Release from '../model/release'
 import Sale from '../model/sale'
 import { DEFAULT_CLIENT_CONFIG, OblivionClientConfig } from './types'
+import VolumeReport from "../model/volumeReport";
 
 interface OblivionHTTPClientConfig extends OblivionClientConfig {
   endpointOverride?: string
@@ -211,5 +212,9 @@ export default class OblivionHTTPClient implements OblivionAPI {
 
   getPaymentTokens(): Promise<PaymentToken[]> {
     return this.callPluralApi('getPaymentTokens')
+  }
+
+  get24HourVolume(): Promise<VolumeReport> {
+    return this.http.get('get24HourVolume')
   }
 }

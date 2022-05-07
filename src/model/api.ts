@@ -4,6 +4,7 @@ import { Nft, NftToken } from './nft'
 import PaymentToken from './paymentToken'
 import Release from './release'
 import Sale from './sale'
+import VolumeReport from "./volumeReport";
 
 export interface OblivionListingAPI {
   getTotalListings: () => Promise<number>
@@ -49,10 +50,15 @@ export interface OblivionPaymentTokenAPI {
   getPaymentTokens: () => Promise<PaymentToken[]>
 }
 
+export interface OblivionVolumeAPI {
+  get24HourVolume: () => Promise<VolumeReport>
+}
+
 export default interface OblivionAPI
   extends OblivionListingAPI,
     OblivionSalesAPI,
     OblivionNftAPI,
     OblivionReleaseAPI,
     OblivionPaymentTokenAPI,
-    OblivionCollectionAPI {}
+    OblivionCollectionAPI,
+    OblivionVolumeAPI {}
