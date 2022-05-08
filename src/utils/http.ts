@@ -37,8 +37,6 @@ export class HTTPAPICaller {
     }
 
     const content: T = await response.json()
-    console.log('guts', content)
-
     return content
   }
 

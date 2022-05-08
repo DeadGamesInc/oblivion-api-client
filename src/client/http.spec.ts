@@ -90,7 +90,6 @@ describe('Listing APIs', () => {
   it('getListing', async () => {
     const listingId = 0
     const listing = await client.getListing(1, listingId)
-    // console.log('nams', listing)
     expect(listing).not.toBeUndefined()
     assertValidListing(listing as Listing)
     expect(listing?.id).toEqual(listingId)

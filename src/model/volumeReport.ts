@@ -1,4 +1,11 @@
-interface VolumeObject {
+interface CollectionReport {
+    id: number
+    name: string
+    image: string
+    volume: number
+}
+
+interface ReleaseReport {
     id: number
     volume: number
 }
@@ -8,6 +15,6 @@ export default interface VolumeReport {
     totalReleaseSales: number
     totalVolume: number
     totalReleaseVolume: number
-    collections: VolumeObject[]
-    releases: VolumeObject[]
+    collections: CollectionReport[]
+    releases: ReleaseReport[]
 }
