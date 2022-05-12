@@ -4,11 +4,11 @@ export interface CollectionReport {
     image: string;
     volume: number;
 }
-export interface ReleaseCollection {
+interface ReleaseCollection {
     name: string;
     image: string;
 }
-interface ReleaseReport {
+export interface ReleaseReport {
     id: number;
     volume: number;
     collection: ReleaseCollection | null;
