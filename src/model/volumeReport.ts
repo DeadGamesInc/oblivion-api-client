@@ -6,6 +6,7 @@ export interface CollectionReport {
 }
 
 interface ReleaseCollection {
+    id: number
     name: string
     image: string
 }
