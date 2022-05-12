@@ -5,6 +5,7 @@ export interface CollectionReport {
     volume: number;
 }
 interface ReleaseCollection {
+    id: number;
     name: string;
     image: string;
 }
