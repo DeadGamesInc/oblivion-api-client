@@ -1,11 +1,11 @@
-interface CollectionReport {
+export interface CollectionReport {
     id: number
     name: string
     image: string
     volume: number
 }
 
-interface ReleaseCollection {
+export interface ReleaseCollection {
     name: string
     image: string
 }
