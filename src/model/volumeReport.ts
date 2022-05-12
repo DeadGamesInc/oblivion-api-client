@@ -5,9 +5,15 @@ interface CollectionReport {
     volume: number
 }
 
+interface ReleaseCollection {
+    name: string
+    image: string
+}
+
 interface ReleaseReport {
     id: number
     volume: number
+    collection: ReleaseCollection | null
 }
 
 export default interface VolumeReport {

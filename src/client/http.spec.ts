@@ -215,6 +215,8 @@ describe('Volume APIs', () => {
     const volume = await client.get24HourVolume()
 
       expect(volume).not.toBeUndefined()
+    console.log('yoo')
+    console.log(volume.releases)
       expect(volume).toMatchSchema(volumeReportSchema)
   })
 })
