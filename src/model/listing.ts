@@ -26,6 +26,13 @@ export interface Offer {
   claimed: boolean
 }
 
+export interface TopOffer extends Offer {
+  version: number
+  paymentToken: string
+  createBlock: BigNumber
+  endBlock: BigNumber
+}
+
 export interface Listing {
   id: number
   tokenId: number
@@ -41,5 +48,6 @@ export interface Listing {
   saleEnd: BigNumber
   createBlock: number
   closedBlock: number
+  topOffer: TopOffer | null
   wasSold: boolean
 }

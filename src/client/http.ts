@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 
 import { getApiBaseUrl } from '../config/http'
 import OblivionAPI from '../model/api'
-import { Listing, Offer , Nft, NftToken } from '../model'
+import { Listing, Offer, Nft, NftToken, TopOffer } from '../model'
 import { HTTPAPICaller, getReturnUndefinedOn404Config } from '../utils/http'
 import Collection from '../model/collection'
 import PaymentToken from '../model/paymentToken'
@@ -17,23 +17,40 @@ interface OblivionHTTPClientConfig extends OblivionClientConfig {
 
 const join = (path: string, ...segments: any[]) => [path, ...segments].join('/')
 
-interface RawListing extends Omit<Listing, 'minimumPrice' | 'targetPrice' | 'saleEnd'> {
+interface RawTopOffer extends Omit<TopOffer, 'amount' | 'discount' | 'createBlock' | 'endBlock'> {
+  amount: string
+  discount: string
+  createBlock: string
+  endBlock: string
+}
+
+interface RawListing extends Omit<Listing, 'minimumPrice' | 'targetPrice' | 'saleEnd' | 'topOffer'> {
   minimumPrice: string
   targetPrice: string
   saleEnd: string
+  topOffer: RawTopOffer | null
 }
+
 const toListing = (rawListing: RawListing): Listing =>
   rawListing && {
     ...rawListing,
     targetPrice: new BigNumber(rawListing.targetPrice),
     minimumPrice: new BigNumber(rawListing.minimumPrice),
     saleEnd: new BigNumber(rawListing.saleEnd),
+    topOffer: rawListing.topOffer ? {
+      ...rawListing.topOffer,
+      amount: new BigNumber(rawListing.topOffer.amount),
+      discount: new BigNumber(rawListing.topOffer.discount),
+      createBlock: new BigNumber(rawListing.topOffer.createBlock),
+      endBlock: new BigNumber(rawListing.topOffer.endBlock),
+    } : null
   }
 
 interface RawOffer extends Omit<Offer, 'amount' | 'discount'> {
   amount: string
   discount: string
 }
+
 const toOffer = (rawOffer: RawOffer): Offer =>
   rawOffer && {
     ...rawOffer,
@@ -46,6 +63,7 @@ interface RawSale extends Omit<Sale, 'amount' | 'createDate' | 'saleDate'> {
   createDate: string
   saleDate: string
 }
+
 const toSale = (rawSale: RawSale): Sale => ({
   ...rawSale,
   amount: new BigNumber(rawSale.amount),
@@ -56,6 +74,7 @@ const toSale = (rawSale: RawSale): Sale => ({
 interface RawNftToken extends Omit<NftToken, 'id'> {
   tokenId: number
 }
+
 const toNftToken = (rawToken: RawNftToken): NftToken =>
   rawToken && {
     ...rawToken,
@@ -68,6 +87,7 @@ interface RawRelease extends Omit<Release, 'price' | 'endDate'> {
   treasuryAddresses: string[]
   treasuryAllocations: number[]
 }
+
 const toRelease = (rawRelease: RawRelease): Release =>
   rawRelease && {
     ...rawRelease,

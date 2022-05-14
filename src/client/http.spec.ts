@@ -69,6 +69,8 @@ describe('Listing APIs', () => {
 
   it('getOpenListingsByNft', async () => {
     const listings = await client.getOpenListingsByNft('0x7A8F23c7545b4a97B15153DeB430E41b481cEA12')
+    console.log('yoo')
+    console.log(listings)
     assertValidListings(listings)
   })
 
@@ -215,8 +217,6 @@ describe('Volume APIs', () => {
     const volume = await client.get24HourVolume()
 
       expect(volume).not.toBeUndefined()
-    console.log('yoo')
-    console.log(volume.releases)
       expect(volume).toMatchSchema(volumeReportSchema)
   })
 })
