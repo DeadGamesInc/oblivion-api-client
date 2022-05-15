@@ -29,6 +29,7 @@ export interface TopOffer extends Offer {
 }
 export interface Listing {
     id: number;
+    version: number;
     tokenId: number;
     nft: Address;
     owner: Address;
