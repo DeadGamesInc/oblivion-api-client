@@ -45,3 +45,20 @@ export interface Listing {
     topOffer: TopOffer | null;
     wasSold: boolean;
 }
+export interface ListingDto {
+    id: number;
+    version: number;
+    paymentToken: string;
+    nft: string;
+    targetPrice: BigNumber;
+    minimumPrice: string;
+    tokenId: number;
+    saleEnd: BigNumber;
+    paymentMethod: number;
+    saleType: number;
+    saleState: number;
+    topOfferToken: string | null;
+    topOfferAmount: BigNumber | null;
+    nftName: string | null;
+    nftCacheLowRes: string | null;
+}

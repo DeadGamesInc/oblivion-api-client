@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 
 import { getApiBaseUrl } from '../config/http'
 import OblivionAPI from '../model/api'
-import { Listing, Offer, Nft, NftToken, TopOffer } from '../model'
+import { Listing, Offer, Nft, NftToken, TopOffer, ListingDto } from '../model'
 import { HTTPAPICaller, getReturnUndefinedOn404Config } from '../utils/http'
 import Collection from '../model/collection'
 import PaymentToken from '../model/paymentToken'
@@ -31,6 +31,12 @@ interface RawListing extends Omit<Listing, 'minimumPrice' | 'targetPrice' | 'sal
   topOffer: RawTopOffer | null
 }
 
+interface RawListingDto extends Omit<ListingDto, 'targetPrice' | 'saleEnd' | 'topOfferAmount'> {
+  targetPrice: string
+  saleEnd: string
+  topOfferAmount: string | null
+}
+
 const toListing = (rawListing: RawListing): Listing =>
   rawListing && {
     ...rawListing,
@@ -44,6 +50,14 @@ const toListing = (rawListing: RawListing): Listing =>
       createBlock: new BigNumber(rawListing.topOffer.createBlock),
       endBlock: new BigNumber(rawListing.topOffer.endBlock),
     } : null
+  }
+
+const toListingDto = (rawListing: RawListingDto): ListingDto =>
+  rawListing && {
+    ...rawListing,
+    targetPrice: new BigNumber(rawListing.targetPrice),
+    saleEnd: new BigNumber(rawListing.saleEnd),
+    topOfferAmount: rawListing.topOfferAmount ? new BigNumber(rawListing.topOfferAmount) : null,
   }
 
 interface RawOffer extends Omit<Offer, 'amount' | 'discount'> {
@@ -112,33 +126,33 @@ export default class OblivionHTTPClient implements OblivionAPI {
     return resultMapper ? results.map(resultMapper) : (results as unknown as T[])
   }
 
-  private callGetListingsApi = (api: string): Promise<Listing[]> => this.callPluralApi(api, toListing)
+  private callGetListingsApi = (api: string): Promise<ListingDto[]> => this.callPluralApi(api, toListingDto)
 
   getTotalListings(): Promise<number> {
     return this.http.get('getTotalListings')
   }
 
-  getListings(): Promise<Listing[]> {
+  getListings(): Promise<ListingDto[]> {
     return this.callGetListingsApi('getListings')
   }
 
-  getOpenListings(): Promise<Listing[]> {
+  getOpenListings(): Promise<ListingDto[]> {
     return this.callGetListingsApi('getOpenListings')
   }
 
-  getClosedListings(): Promise<Listing[]> {
+  getClosedListings(): Promise<ListingDto[]> {
     return this.callGetListingsApi('getClosedListings')
   }
 
-  getSoldListings(): Promise<Listing[]> {
+  getSoldListings(): Promise<ListingDto[]> {
     return this.callGetListingsApi('getSoldListings')
   }
 
-  getListingsByNft(nftContractAddress: string): Promise<Listing[]> {
+  getListingsByNft(nftContractAddress: string): Promise<ListingDto[]> {
     return this.callGetListingsApi(join('getListingsByNft', nftContractAddress))
   }
 
-  getOpenListingsByNft(nftContractAddress: string): Promise<Listing[]> {
+  getOpenListingsByNft(nftContractAddress: string): Promise<ListingDto[]> {
     return this.callGetListingsApi(`getOpenListingsByNft/${nftContractAddress}`)
   }
 
@@ -147,15 +161,15 @@ export default class OblivionHTTPClient implements OblivionAPI {
     return toListing(listing)
   }
 
-  getUserListings(walletAddress: string): Promise<Listing[]> {
+  getUserListings(walletAddress: string): Promise<ListingDto[]> {
     return this.callGetListingsApi(join('getUserListings', walletAddress))
   }
 
-  getUserListingsWithOpenOffers(walletAddress: string): Promise<Listing[]> {
+  getUserListingsWithOpenOffers(walletAddress: string): Promise<ListingDto[]> {
     return this.callGetListingsApi(join('getUserListingsWithOpenOffers', walletAddress))
   }
 
-  getUserOpenListings(walletAddress: string): Promise<Listing[]> {
+  getUserOpenListings(walletAddress: string): Promise<ListingDto[]> {
     return this.callGetListingsApi(join('getUserOpenListings', walletAddress))
   }
 

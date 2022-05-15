@@ -3,7 +3,7 @@ import { matchersWithOptions } from 'jest-json-schema'
 import * as TJS from 'typescript-json-schema'
 
 import OblivionHTTPClient from './http'
-import { ChainId, Listing, Offer } from '../model'
+import { ChainId, Listing, ListingDto, Offer } from '../model'
 
 expect.extend(
   matchersWithOptions({
@@ -26,10 +26,12 @@ const client = new OblivionHTTPClient({ chainId: ChainId.BSCTestnet })
 describe('Listing APIs', () => {
   const assertValidListing = (listing: Listing) =>
     expect(listing).toMatchSchema(schemaProvider.getSchemaForSymbol('Listing'))
-  const assertValidListings = (listings: Listing[]) => {
+  const assertValidListingDto = (listing: ListingDto) =>
+    expect(listing).toMatchSchema(schemaProvider.getSchemaForSymbol('ListingDto'))
+  const assertValidListings = (listings: ListingDto[]) => {
     expect(listings).not.toBeUndefined()
     expect(listings.length).toBeGreaterThan(0)
-    listings.forEach((listing) => assertValidListing(listing))
+    listings.forEach((listing) => assertValidListingDto(listing))
   }
 
   const assertValidOffer = (offer: Offer | undefined) => {
