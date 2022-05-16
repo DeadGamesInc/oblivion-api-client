@@ -30,5 +30,7 @@ export interface Nft {
   name: string
   symbol: string
   uri: string
+  cacheHighRes: string
+  cacheLowRes: string
   metadata?: NftTokenMetadata
 }
