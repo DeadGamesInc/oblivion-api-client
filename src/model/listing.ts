@@ -20,6 +20,7 @@ export enum SaleState {
 
 export interface Offer {
   id: number
+  paymentToken: Address
   offeror: Address
   amount: BigNumber
   discount: BigNumber
@@ -57,7 +58,7 @@ export interface ListingDto {
   id: number
   version: number
   paymentToken: string
-  nft: string
+  nft: Address
   targetPrice: BigNumber
   minimumPrice: string
   tokenId: number
@@ -65,7 +66,7 @@ export interface ListingDto {
   paymentMethod: number
   saleType: number
   saleState: number
-  topOfferToken: string | null
+  topOfferToken: Address | null
   topOfferAmount: BigNumber | null
   nftName: string | null
   nftCacheLowRes: string | null
