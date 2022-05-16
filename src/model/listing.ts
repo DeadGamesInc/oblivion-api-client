@@ -67,7 +67,7 @@ export interface ListingDto {
   saleType: number
   saleState: number
   topOfferToken: Address | null
-  topOfferAmount: BigNumber
+  // topOfferAmount: BigNumber
   nftName: string | null
   nftCacheHighRes: string | null
 }
