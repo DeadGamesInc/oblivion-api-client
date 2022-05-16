@@ -26,6 +26,5 @@ export interface Nft {
     symbol: string;
     uri: string;
     cacheHighRes: string;
-    cacheLowRes: string;
     metadata?: NftTokenMetadata;
 }
