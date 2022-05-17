@@ -32,6 +32,8 @@ export default class OblivionHTTPClient implements OblivionAPI {
     getTotalOffers(version: number, listingId: number): Promise<number>;
     getSales(): Promise<Sale[]>;
     getNft(nftContractAddress: string): Promise<Nft | undefined>;
+    getNfts(): Promise<Nft[]>;
+    getNftsByAddress(addresses: string[]): Promise<Nft[]>;
     getNftToken(nftContractAddress: string, tokenId: number): Promise<NftToken | undefined>;
     getNftTokens(nftContractAddress: string, tokenIds: number[]): Promise<NftToken[]>;
     getTotalCollections(): Promise<number>;

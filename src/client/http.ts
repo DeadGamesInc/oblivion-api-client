@@ -205,6 +205,14 @@ export default class OblivionHTTPClient implements OblivionAPI {
     return this.http.get(join('getNft', nftContractAddress), getReturnUndefinedOn404Config())
   }
 
+  getNfts(): Promise<Nft[]> {
+    return this.http.get('getNfts', getReturnUndefinedOn404Config())
+  }
+
+  getNftsByAddress(addresses: string[]): Promise<Nft[]> {
+    return this.http.post('getNftsByAddress', addresses, getReturnUndefinedOn404Config())
+  }
+
   async getNftToken(nftContractAddress: string, tokenId: number): Promise<NftToken | undefined> {
     const token: RawNftToken = await this.http.get(
       join('getNftTokenURI', nftContractAddress, tokenId),

@@ -135,6 +135,16 @@ describe('NFT APIs', () => {
     expect(nft).toMatchSchema(schemaProvider.getSchemaForSymbol('Nft'))
   })
 
+  it('getNfts', async () => {
+    const nfts = await client.getNfts()
+    nfts.forEach((nft) => expect(nft).toMatchSchema(schemaProvider.getSchemaForSymbol('Nft')))
+  })
+
+  it('getNftsByAddress', async () => {
+    const nfts = await client.getNftsByAddress(['0x7A8F23c7545b4a97B15153DeB430E41b481cEA12', '0x1EA27685C246f3a9636ee5787084632FaA0dd4c8'])
+    nfts.forEach((nft) => expect(nft).toMatchSchema(schemaProvider.getSchemaForSymbol('Nft')))
+  })
+
   const nftTokenSchema = schemaProvider.getSchemaForSymbol('NftToken')
   it('getNftTokenMetadata', async () => {
     const token = await client.getNftToken('0x7A8F23c7545b4a97B15153DeB430E41b481cEA12', 1)

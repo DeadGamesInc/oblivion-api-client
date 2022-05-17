@@ -30,6 +30,7 @@ export interface OblivionSalesAPI {
 
 export interface OblivionNftAPI {
   getNft: (nftContractAddress: string) => Promise<Nft | undefined>
+  getNfts: () => Promise<Nft[]>
   getNftToken: (nftContractAddress: string, tokenId: number) => Promise<NftToken | undefined>
   getNftTokens: (nftContractAddress: string, tokenIds: number[]) => Promise<NftToken[]>
 }

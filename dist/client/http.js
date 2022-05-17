@@ -182,6 +182,12 @@ var OblivionHTTPClient = /** @class */ (function () {
     OblivionHTTPClient.prototype.getNft = function (nftContractAddress) {
         return this.http.get(join('getNft', nftContractAddress), getReturnUndefinedOn404Config());
     };
+    OblivionHTTPClient.prototype.getNfts = function () {
+        return this.http.get('getNfts', getReturnUndefinedOn404Config());
+    };
+    OblivionHTTPClient.prototype.getNftsByAddress = function (addresses) {
+        return this.http.post('getNftsByAddress', addresses, getReturnUndefinedOn404Config());
+    };
     OblivionHTTPClient.prototype.getNftToken = function (nftContractAddress, tokenId) {
         return __awaiter(this, void 0, void 0, function () {
             var token;
