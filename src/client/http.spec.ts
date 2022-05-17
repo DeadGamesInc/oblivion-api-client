@@ -81,8 +81,6 @@ describe('Listing APIs', () => {
 
   it('getUserListingsWithOpenOffers', async () => {
     const listings = await client.getUserListingsWithOpenOffers('0xe8CDE3F69D7d3CAadfB2789B1A3DB60A8E70cc40')
-    console.log('yooo')
-    console.log(listings)
     assertValidListings(listings)
   })
 
