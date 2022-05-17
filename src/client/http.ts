@@ -31,10 +31,10 @@ interface RawListing extends Omit<Listing, 'minimumPrice' | 'targetPrice' | 'sal
   topOffer: RawTopOffer | null
 }
 
-interface RawListingDto extends Omit<ListingDto, 'targetPrice' | 'saleEnd' > {
+interface RawListingDto extends Omit<ListingDto, 'targetPrice' | 'saleEnd' | 'topOfferAmount' > {
   targetPrice: string
   saleEnd: string
-  // topOfferAmount: string
+  topOfferAmount: string
 }
 
 const toListing = (rawListing: RawListing): Listing =>
@@ -57,7 +57,7 @@ const toListingDto = (rawListing: RawListingDto): ListingDto =>
     ...rawListing,
     targetPrice: new BigNumber(rawListing.targetPrice),
     saleEnd: new BigNumber(rawListing.saleEnd),
-    // topOfferAmount: new BigNumber(rawListing.topOfferAmount)
+    topOfferAmount: new BigNumber(rawListing.topOfferAmount)
   }
 
 interface RawOffer extends Omit<Offer, 'amount' | 'discount'> {

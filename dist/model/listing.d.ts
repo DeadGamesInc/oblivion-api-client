@@ -60,6 +60,7 @@ export interface ListingDto {
     saleType: number;
     saleState: number;
     topOfferToken: Address | null;
+    topOfferAmount: BigNumber | null;
     nftName: string | null;
     nftCacheHighRes: string | null;
 }

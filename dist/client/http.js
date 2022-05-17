@@ -69,7 +69,7 @@ var toListing = function (rawListing) {
     return rawListing && __assign(__assign({}, rawListing), { targetPrice: new BigNumber(rawListing.targetPrice), minimumPrice: new BigNumber(rawListing.minimumPrice), saleEnd: new BigNumber(rawListing.saleEnd), topOffer: rawListing.topOffer ? __assign(__assign({}, rawListing.topOffer), { amount: new BigNumber(rawListing.topOffer.amount), discount: new BigNumber(rawListing.topOffer.discount), createBlock: new BigNumber(rawListing.topOffer.createBlock), endBlock: new BigNumber(rawListing.topOffer.endBlock) }) : null });
 };
 var toListingDto = function (rawListing) {
-    return rawListing && __assign(__assign({}, rawListing), { targetPrice: new BigNumber(rawListing.targetPrice), saleEnd: new BigNumber(rawListing.saleEnd) });
+    return rawListing && __assign(__assign({}, rawListing), { targetPrice: new BigNumber(rawListing.targetPrice), saleEnd: new BigNumber(rawListing.saleEnd), topOfferAmount: new BigNumber(rawListing.topOfferAmount) });
 };
 var toOffer = function (rawOffer) {
     return rawOffer && __assign(__assign({}, rawOffer), { amount: new BigNumber(rawOffer.amount), discount: new BigNumber(rawOffer.discount) });
