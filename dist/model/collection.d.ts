@@ -4,6 +4,7 @@ export default interface Collection {
     owner: Address;
     treasury: Address;
     royalties: number;
+    name: string;
     description: string;
     image: string;
     banner: string;
