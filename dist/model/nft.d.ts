@@ -15,11 +15,6 @@ export interface NftToken {
     uri: string;
     metadata: NftTokenMetadata;
 }
-export interface NftCollectionInfo {
-    id: number;
-    index: number;
-    inCollection: boolean;
-}
 export interface Nft {
     address: Address;
     name: string;
