@@ -34,6 +34,19 @@ export interface TopOffer extends Offer {
   endBlock: BigNumber
 }
 
+export interface SaleInformation {
+  id: number
+  version: number
+  amount: BigNumber
+  paymentToken: Address
+  buyer: Address
+  seller: Address
+  nft: Address
+  collectionId: number
+  createDate: string
+  saleDate: string
+}
+
 export interface Listing {
   id: number
   version: number
@@ -51,7 +64,9 @@ export interface Listing {
   createBlock: number
   closedBlock: number
   topOffer: TopOffer | null
+  txHash: string | null
   wasSold: boolean
+  saleInformation: SaleInformation | null
 }
 
 export interface ListingDto {

@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 
 import { getApiBaseUrl } from '../config/http'
 import OblivionAPI from '../model/api'
-import { Listing, Offer, Nft, NftToken, TopOffer, ListingDto } from '../model'
+import { Listing, Offer, Nft, NftToken, TopOffer, ListingDto, SaleInformation } from '../model'
 import { HTTPAPICaller, getReturnUndefinedOn404Config } from '../utils/http'
 import Collection from '../model/collection'
 import PaymentToken from '../model/paymentToken'
@@ -24,14 +24,19 @@ interface RawTopOffer extends Omit<TopOffer, 'amount' | 'discount' | 'createBloc
   endBlock: string
 }
 
-interface RawListing extends Omit<Listing, 'minimumPrice' | 'targetPrice' | 'saleEnd' | 'topOffer'> {
+interface RawSaleInformation extends Omit<SaleInformation, 'amount'> {
+  amount: string
+}
+
+interface RawListing extends Omit<Listing, 'minimumPrice' | 'targetPrice' | 'saleEnd' | 'topOffer' | 'saleInformation'> {
   minimumPrice: string
   targetPrice: string
   saleEnd: string
   topOffer: RawTopOffer | null
+  saleInformation: RawSaleInformation | null
 }
 
-interface RawListingDto extends Omit<ListingDto, 'targetPrice' | 'saleEnd' | 'topOfferAmount' > {
+interface RawListingDto extends Omit<ListingDto, 'targetPrice' | 'saleEnd' | 'topOfferAmount'> {
   targetPrice: string
   saleEnd: string
   topOfferAmount: string | null
@@ -49,6 +54,10 @@ const toListing = (rawListing: RawListing): Listing =>
       discount: new BigNumber(rawListing.topOffer.discount),
       createBlock: new BigNumber(rawListing.topOffer.createBlock),
       endBlock: new BigNumber(rawListing.topOffer.endBlock),
+    } : null,
+    saleInformation: rawListing.saleInformation ? {
+      ...rawListing.saleInformation,
+      amount: new BigNumber(rawListing.saleInformation.amount)
     } : null
   }
 

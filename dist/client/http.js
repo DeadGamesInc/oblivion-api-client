@@ -66,7 +66,7 @@ var join = function (path) {
     return __spreadArray([path], segments, true).join('/');
 };
 var toListing = function (rawListing) {
-    return rawListing && __assign(__assign({}, rawListing), { targetPrice: new BigNumber(rawListing.targetPrice), minimumPrice: new BigNumber(rawListing.minimumPrice), saleEnd: new BigNumber(rawListing.saleEnd), topOffer: rawListing.topOffer ? __assign(__assign({}, rawListing.topOffer), { amount: new BigNumber(rawListing.topOffer.amount), discount: new BigNumber(rawListing.topOffer.discount), createBlock: new BigNumber(rawListing.topOffer.createBlock), endBlock: new BigNumber(rawListing.topOffer.endBlock) }) : null });
+    return rawListing && __assign(__assign({}, rawListing), { targetPrice: new BigNumber(rawListing.targetPrice), minimumPrice: new BigNumber(rawListing.minimumPrice), saleEnd: new BigNumber(rawListing.saleEnd), topOffer: rawListing.topOffer ? __assign(__assign({}, rawListing.topOffer), { amount: new BigNumber(rawListing.topOffer.amount), discount: new BigNumber(rawListing.topOffer.discount), createBlock: new BigNumber(rawListing.topOffer.createBlock), endBlock: new BigNumber(rawListing.topOffer.endBlock) }) : null, saleInformation: rawListing.saleInformation ? __assign(__assign({}, rawListing.saleInformation), { amount: new BigNumber(rawListing.saleInformation.amount) }) : null });
 };
 var toListingDto = function (rawListing) {
     return rawListing && __assign(__assign({}, rawListing), { targetPrice: new BigNumber(rawListing.targetPrice), saleEnd: new BigNumber(rawListing.saleEnd), topOfferAmount: rawListing.topOfferAmount ? new BigNumber(rawListing.topOfferAmount) : null });
