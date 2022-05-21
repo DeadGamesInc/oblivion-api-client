@@ -170,6 +170,11 @@ export default class OblivionHTTPClient implements OblivionAPI {
     return toListing(listing)
   }
 
+  async refreshListing(version: number, listingId: number): Promise<Listing | undefined> {
+    const listing: RawListing = await this.http.get(join('refreshListing', version, listingId), getReturnUndefinedOn404Config())
+    return toListing(listing)
+  }
+
   getUserListings(walletAddress: string): Promise<ListingDto[]> {
     return this.callGetListingsApi(join('getUserListings', walletAddress))
   }
@@ -187,6 +192,15 @@ export default class OblivionHTTPClient implements OblivionAPI {
   async getOffer(version: number, listingId: number, paymentTokenAddress: string, offerId: number): Promise<Offer | undefined> {
     const offer: RawOffer = await this.http.get(
       join('getOffer', version, listingId, paymentTokenAddress, offerId),
+      getReturnUndefinedOn404Config(),
+    )
+
+    return toOffer(offer)
+  }
+
+  async refreshOffer(version: number, listingId: number, paymentTokenAddress: string, offerId: number): Promise<Offer | undefined> {
+    const offer: RawOffer = await this.http.get(
+      join('refreshOffer', version, listingId, paymentTokenAddress, offerId),
       getReturnUndefinedOn404Config(),
     )
 
@@ -248,6 +262,10 @@ export default class OblivionHTTPClient implements OblivionAPI {
     return this.http.get(join('getCollection', collectionId), getReturnUndefinedOn404Config())
   }
 
+  refreshCollection(collectionId: number): Promise<Collection | undefined> {
+    return this.http.get(join('refreshCollection', collectionId), getReturnUndefinedOn404Config())
+  }
+
   getTotalReleases(): Promise<number> {
     return this.http.get('getTotalReleases')
   }
@@ -258,6 +276,11 @@ export default class OblivionHTTPClient implements OblivionAPI {
 
   async getRelease(releaseId: number): Promise<Release | undefined> {
     const release: RawRelease = await this.http.get(join('getRelease', releaseId), getReturnUndefinedOn404Config())
+    return toRelease(release)
+  }
+
+  async refreshRelease(releaseId: number): Promise<Release | undefined> {
+    const release: RawRelease = await this.http.get(join('refreshRelease', releaseId), getReturnUndefinedOn404Config())
     return toRelease(release)
   }
 

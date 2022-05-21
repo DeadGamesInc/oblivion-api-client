@@ -97,6 +97,14 @@ describe('Listing APIs', () => {
     expect(listing?.id).toEqual(listingId)
    })
 
+  it('refreshListing', async () => {
+    const listingId = 0
+    const listing = await client.refreshListing(1, listingId)
+    expect(listing).not.toBeUndefined()
+    assertValidListing(listing as Listing)
+    expect(listing?.id).toEqual(listingId)
+   })
+
   it('getTotalOffers', async () => {
     const totalOffers = await client.getTotalOffers(1, 2)
     expect(totalOffers).toBeGreaterThan(0)
@@ -116,8 +124,13 @@ describe('Listing APIs', () => {
     offers.forEach(assertValidOffer)
   })
 
-  it('g', async () => {
+  it('getOffer', async () => {
     const offer = await client.getOffer(1, 0, '0x0000000000000000000000000000000000000000', 0)
+    assertValidOffer(offer)
+  })
+
+  it('refreshOffer', async () => {
+    const offer = await client.refreshOffer(1, 0, '0x0000000000000000000000000000000000000000', 0)
     assertValidOffer(offer)
   })
 })
@@ -183,6 +196,13 @@ describe('Collection APIs', () => {
     expect(collection).not.toBeUndefined()
     expect(collection).toMatchSchema(collectionSchema)
   })
+
+  it('refreshCollection', async () => {
+    const collection = await client.refreshCollection(0)
+
+    expect(collection).not.toBeUndefined()
+    expect(collection).toMatchSchema(collectionSchema)
+  })
 })
 
 describe('Release APIs', () => {
@@ -203,6 +223,15 @@ describe('Release APIs', () => {
   it('getRelease', async () => {
     const releaseId = 1
     const release = await client.getRelease(1)
+
+    expect(release).toMatchSchema(releaseSchema)
+    expect(release).not.toBeUndefined()
+    expect(release!.id).toEqual(releaseId)
+  })
+
+  it('refreshRelease', async () => {
+    const releaseId = 1
+    const release = await client.refreshRelease(1)
 
     expect(release).toMatchSchema(releaseSchema)
     expect(release).not.toBeUndefined()

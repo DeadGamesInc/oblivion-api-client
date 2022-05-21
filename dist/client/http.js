@@ -135,6 +135,19 @@ var OblivionHTTPClient = /** @class */ (function () {
             });
         });
     };
+    OblivionHTTPClient.prototype.refreshListing = function (version, listingId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var listing;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.http.get(join('refreshListing', version, listingId), getReturnUndefinedOn404Config())];
+                    case 1:
+                        listing = _a.sent();
+                        return [2 /*return*/, toListing(listing)];
+                }
+            });
+        });
+    };
     OblivionHTTPClient.prototype.getUserListings = function (walletAddress) {
         return this.callGetListingsApi(join('getUserListings', walletAddress));
     };
@@ -150,6 +163,19 @@ var OblivionHTTPClient = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.http.get(join('getOffer', version, listingId, paymentTokenAddress, offerId), getReturnUndefinedOn404Config())];
+                    case 1:
+                        offer = _a.sent();
+                        return [2 /*return*/, toOffer(offer)];
+                }
+            });
+        });
+    };
+    OblivionHTTPClient.prototype.refreshOffer = function (version, listingId, paymentTokenAddress, offerId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var offer;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.http.get(join('refreshOffer', version, listingId, paymentTokenAddress, offerId), getReturnUndefinedOn404Config())];
                     case 1:
                         offer = _a.sent();
                         return [2 /*return*/, toOffer(offer)];
@@ -223,6 +249,9 @@ var OblivionHTTPClient = /** @class */ (function () {
     OblivionHTTPClient.prototype.getCollection = function (collectionId) {
         return this.http.get(join('getCollection', collectionId), getReturnUndefinedOn404Config());
     };
+    OblivionHTTPClient.prototype.refreshCollection = function (collectionId) {
+        return this.http.get(join('refreshCollection', collectionId), getReturnUndefinedOn404Config());
+    };
     OblivionHTTPClient.prototype.getTotalReleases = function () {
         return this.http.get('getTotalReleases');
     };
@@ -235,6 +264,19 @@ var OblivionHTTPClient = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.http.get(join('getRelease', releaseId), getReturnUndefinedOn404Config())];
+                    case 1:
+                        release = _a.sent();
+                        return [2 /*return*/, toRelease(release)];
+                }
+            });
+        });
+    };
+    OblivionHTTPClient.prototype.refreshRelease = function (releaseId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var release;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.http.get(join('refreshRelease', releaseId), getReturnUndefinedOn404Config())];
                     case 1:
                         release = _a.sent();
                         return [2 /*return*/, toRelease(release)];

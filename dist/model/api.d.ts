@@ -17,10 +17,12 @@ export interface OblivionListingAPI {
     getUserListingsWithOpenOffers: (walletAddress: string) => Promise<ListingDto[]>;
     getUserOpenListings: (walletAddress: string) => Promise<ListingDto[]>;
     getListing: (version: number, listingId: number) => Promise<Listing | undefined>;
+    refreshListing: (version: number, listingId: number) => Promise<Listing | undefined>;
     getTotalOffers: (version: number, listingId: number) => Promise<number>;
     getOffers: (version: number, listingId: number) => Promise<Offer[]>;
     getOpenOffers: (version: any, listingId: number) => Promise<Offer[]>;
     getOffer: (version: number, listingId: number, paymentTokenAddress: string, offerId: number) => Promise<Offer | undefined>;
+    refreshOffer: (version: number, listingId: number, paymentTokenAddress: string, offerId: number) => Promise<Offer | undefined>;
 }
 export interface OblivionSalesAPI {
     getSales: () => Promise<Sale[]>;
@@ -36,11 +38,13 @@ export interface OblivionCollectionAPI {
     getTotalCollections: () => Promise<number>;
     getCollections: () => Promise<Collection[]>;
     getCollection: (collectionId: number) => Promise<Collection | undefined>;
+    refreshCollection: (collectionId: number) => Promise<Collection | undefined>;
 }
 export interface OblivionReleaseAPI {
     getTotalReleases: () => Promise<number>;
     getReleases: () => Promise<Release[]>;
     getRelease: (releaseId: number) => Promise<Release | undefined>;
+    refreshRelease: (releaseId: number) => Promise<Release | undefined>;
 }
 export interface OblivionPaymentTokenAPI {
     getPaymentTokens: () => Promise<PaymentToken[]>;
