@@ -16,6 +16,7 @@ export declare enum SaleState {
 }
 export interface Offer {
     id: number;
+    listingId: number;
     version: number;
     tokenId: number;
     nftSymbol: string;
