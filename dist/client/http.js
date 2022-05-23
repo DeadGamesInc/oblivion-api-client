@@ -186,6 +186,9 @@ var OblivionHTTPClient = /** @class */ (function () {
     OblivionHTTPClient.prototype.getOffers = function (version, listingId) {
         return this.callGetOffersApi(join('getOffers', version, listingId));
     };
+    OblivionHTTPClient.prototype.getUserOffers = function (address) {
+        return this.callGetOffersApi(join('getUserOffers', address));
+    };
     OblivionHTTPClient.prototype.getOpenOffers = function (version, listingId) {
         return this.callGetOffersApi(join('getOpenOffers', version, listingId));
     };
@@ -246,6 +249,9 @@ var OblivionHTTPClient = /** @class */ (function () {
     OblivionHTTPClient.prototype.getCollections = function () {
         return this.callPluralApi('getCollections');
     };
+    OblivionHTTPClient.prototype.getUserCollections = function (address) {
+        return this.callPluralApi(join('getCollections', address));
+    };
     OblivionHTTPClient.prototype.getCollection = function (collectionId) {
         return this.http.get(join('getCollection', collectionId), getReturnUndefinedOn404Config());
     };
@@ -257,6 +263,9 @@ var OblivionHTTPClient = /** @class */ (function () {
     };
     OblivionHTTPClient.prototype.getReleases = function () {
         return this.callPluralApi('getReleases', toRelease);
+    };
+    OblivionHTTPClient.prototype.getUserReleases = function (address) {
+        return this.callPluralApi(join('getReleases', address), toRelease);
     };
     OblivionHTTPClient.prototype.getRelease = function (releaseId) {
         return __awaiter(this, void 0, void 0, function () {

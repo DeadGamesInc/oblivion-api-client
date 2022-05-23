@@ -117,6 +117,13 @@ describe('Listing APIs', () => {
     offers.forEach(assertValidOffer)
   })
 
+  it('getUserOffers', async () => {
+    const offers = await client.getUserOffers("0xB8C1FFF8b915232067c1e7449870e397E43B143b")
+
+    expect(offers.length).toBeGreaterThan(0)
+    offers.forEach(assertValidOffer)
+  })
+
   it('getOpenOffers', async () => {
     const offers = await client.getOpenOffers(1, 0)
 
@@ -190,6 +197,14 @@ describe('Collection APIs', () => {
     collections.forEach((collection) => expect(collection).toMatchSchema(collectionSchema))
   })
 
+  it('getUserCollections', async () => {
+    const collections = await client.getUserCollections('0xB8C1FFF8b915232067c1e7449870e397E43B143b')
+
+    expect(collections.length).toBeGreaterThan(0)
+
+    collections.forEach((collection) => expect(collection).toMatchSchema(collectionSchema))
+  })
+
   it('getCollection', async () => {
     const collection = await client.getCollection(0)
 
@@ -214,6 +229,14 @@ describe('Release APIs', () => {
   const releaseSchema = schemaProvider.getSchemaForSymbol('Release')
   it('getReleases', async () => {
     const releases = await client.getReleases()
+
+    expect(releases).not.toBeUndefined()
+    expect(releases.length).toBeGreaterThan(0)
+    releases.forEach((release) => expect(release).toMatchSchema(releaseSchema))
+  })
+
+  it('getUserReleases', async () => {
+    const releases = await client.getUserReleases('0xB8C1FFF8b915232067c1e7449870e397E43B143b')
 
     expect(releases).not.toBeUndefined()
     expect(releases.length).toBeGreaterThan(0)

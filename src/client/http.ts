@@ -211,6 +211,10 @@ export default class OblivionHTTPClient implements OblivionAPI {
     return this.callGetOffersApi(join('getOffers', version, listingId))
   }
 
+  getUserOffers(address: string): Promise<Offer[]> {
+    return this.callGetOffersApi(join('getUserOffers', address))
+  }
+
   getOpenOffers(version: number, listingId: number): Promise<Offer[]> {
     return this.callGetOffersApi(join('getOpenOffers', version, listingId))
   }
@@ -258,6 +262,10 @@ export default class OblivionHTTPClient implements OblivionAPI {
     return this.callPluralApi('getCollections')
   }
 
+  getUserCollections(address: string): Promise<Collection[]> {
+    return this.callPluralApi(join('getCollections', address))
+  }
+
   getCollection(collectionId: number): Promise<Collection | undefined> {
     return this.http.get(join('getCollection', collectionId), getReturnUndefinedOn404Config())
   }
@@ -272,6 +280,10 @@ export default class OblivionHTTPClient implements OblivionAPI {
 
   getReleases(): Promise<Release[]> {
     return this.callPluralApi('getReleases', toRelease)
+  }
+
+  getUserReleases(address: string): Promise<Release[]> {
+    return this.callPluralApi(join('getReleases', address), toRelease)
   }
 
   async getRelease(releaseId: number): Promise<Release | undefined> {

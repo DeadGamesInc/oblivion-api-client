@@ -30,6 +30,7 @@ export default class OblivionHTTPClient implements OblivionAPI {
     getOffer(version: number, listingId: number, paymentTokenAddress: string, offerId: number): Promise<Offer | undefined>;
     refreshOffer(version: number, listingId: number, paymentTokenAddress: string, offerId: number): Promise<Offer | undefined>;
     getOffers(version: number, listingId: number): Promise<Offer[]>;
+    getUserOffers(address: string): Promise<Offer[]>;
     getOpenOffers(version: number, listingId: number): Promise<Offer[]>;
     getTotalOffers(version: number, listingId: number): Promise<number>;
     getSales(): Promise<Sale[]>;
@@ -40,10 +41,12 @@ export default class OblivionHTTPClient implements OblivionAPI {
     getNftTokens(nftContractAddress: string, tokenIds: number[]): Promise<NftToken[]>;
     getTotalCollections(): Promise<number>;
     getCollections(): Promise<Collection[]>;
+    getUserCollections(address: string): Promise<Collection[]>;
     getCollection(collectionId: number): Promise<Collection | undefined>;
     refreshCollection(collectionId: number): Promise<Collection | undefined>;
     getTotalReleases(): Promise<number>;
     getReleases(): Promise<Release[]>;
+    getUserReleases(address: string): Promise<Release[]>;
     getRelease(releaseId: number): Promise<Release | undefined>;
     refreshRelease(releaseId: number): Promise<Release | undefined>;
     getPaymentTokens(): Promise<PaymentToken[]>;

@@ -21,6 +21,7 @@ export interface OblivionListingAPI {
   refreshListing: (version: number, listingId: number) => Promise<Listing | undefined>
   getTotalOffers: (version: number, listingId: number) => Promise<number>
   getOffers: (version: number, listingId: number) => Promise<Offer[]>
+  getUserOffers: (address: string) => Promise<Offer[]>
   getOpenOffers: (version, listingId: number) => Promise<Offer[]>
   getOffer: (version: number, listingId: number, paymentTokenAddress: string, offerId: number) => Promise<Offer | undefined>
   refreshOffer: (version: number, listingId: number, paymentTokenAddress: string, offerId: number) => Promise<Offer | undefined>
@@ -41,6 +42,7 @@ export interface OblivionNftAPI {
 export interface OblivionCollectionAPI {
   getTotalCollections: () => Promise<number>
   getCollections: () => Promise<Collection[]>
+  getUserCollections: (address: string) => Promise<Collection[]>
   getCollection: (collectionId: number) => Promise<Collection | undefined>
   refreshCollection: (collectionId: number) => Promise<Collection | undefined>
 }
@@ -48,6 +50,7 @@ export interface OblivionCollectionAPI {
 export interface OblivionReleaseAPI {
   getTotalReleases: () => Promise<number>
   getReleases: () => Promise<Release[]>
+  getUserReleases: (address: string) => Promise<Release[]>
   getRelease: (releaseId: number) => Promise<Release | undefined>
   refreshRelease: (releaseId: number) => Promise<Release | undefined>
 }

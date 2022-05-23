@@ -16,6 +16,7 @@ export declare enum SaleState {
 }
 export interface Offer {
     id: number;
+    version: number;
     paymentToken: Address;
     offeror: Address;
     amount: BigNumber;
