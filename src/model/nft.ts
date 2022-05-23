@@ -24,6 +24,7 @@ export interface Nft {
   name: string
   symbol: string
   uri: string
+  totalSupply: number
   cacheHighRes: string | null
   metadata: NftTokenMetadata | null
 }
