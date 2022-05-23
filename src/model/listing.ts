@@ -21,6 +21,8 @@ export enum SaleState {
 export interface Offer {
   id: number
   version: number
+  tokenId: number
+  nftSymbol: string
   paymentToken: Address
   offeror: Address
   amount: BigNumber
