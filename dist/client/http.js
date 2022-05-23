@@ -250,7 +250,7 @@ var OblivionHTTPClient = /** @class */ (function () {
         return this.callPluralApi('getCollections');
     };
     OblivionHTTPClient.prototype.getUserCollections = function (address) {
-        return this.callPluralApi(join('getCollections', address));
+        return this.callPluralApi(join('getUserCollections', address));
     };
     OblivionHTTPClient.prototype.getCollection = function (collectionId) {
         return this.http.get(join('getCollection', collectionId), getReturnUndefinedOn404Config());
@@ -265,7 +265,7 @@ var OblivionHTTPClient = /** @class */ (function () {
         return this.callPluralApi('getReleases', toRelease);
     };
     OblivionHTTPClient.prototype.getUserReleases = function (address) {
-        return this.callPluralApi(join('getReleases', address), toRelease);
+        return this.callPluralApi(join('getUserReleases', address), toRelease);
     };
     OblivionHTTPClient.prototype.getRelease = function (releaseId) {
         return __awaiter(this, void 0, void 0, function () {

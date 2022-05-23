@@ -263,7 +263,7 @@ export default class OblivionHTTPClient implements OblivionAPI {
   }
 
   getUserCollections(address: string): Promise<Collection[]> {
-    return this.callPluralApi(join('getCollections', address))
+    return this.callPluralApi(join('getUserCollections', address))
   }
 
   getCollection(collectionId: number): Promise<Collection | undefined> {
@@ -283,7 +283,7 @@ export default class OblivionHTTPClient implements OblivionAPI {
   }
 
   getUserReleases(address: string): Promise<Release[]> {
-    return this.callPluralApi(join('getReleases', address), toRelease)
+    return this.callPluralApi(join('getUserReleases', address), toRelease)
   }
 
   async getRelease(releaseId: number): Promise<Release | undefined> {
