@@ -89,4 +89,5 @@ export interface ListingDto {
   topOfferAmount: BigNumber | null
   nftName: string | null
   nftCacheHighRes: string | null
+  nftCacheLowRes: string | null
 }
