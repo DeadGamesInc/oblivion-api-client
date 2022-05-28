@@ -26,5 +26,6 @@ export interface Nft {
   uri: string
   totalSupply: number
   cacheHighRes: string | null
+  cacheLowRes: string | null
   metadata: NftTokenMetadata | null
 }
