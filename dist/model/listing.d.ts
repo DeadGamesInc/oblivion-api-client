@@ -64,6 +64,8 @@ export interface Listing {
     txHash: string | null;
     wasSold: boolean;
     saleInformation: SaleInformation | null;
+    collectionId: number | null;
+    collectionName: string | null;
 }
 export interface ListingDto {
     id: number;
@@ -82,4 +84,6 @@ export interface ListingDto {
     nftName: string | null;
     nftCacheHighRes: string | null;
     nftCacheLowRes: string | null;
+    collectionId: number | null;
+    collectionName: string | null;
 }
