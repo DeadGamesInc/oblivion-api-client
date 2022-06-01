@@ -16,8 +16,8 @@ export interface NftTokenMetadata {
 export interface NftToken {
   id: number
   uri: string
-  highResCache: string
-  lowResCache: string
+  cacheHighRes: string
+  cacheLowRes: string
   metadata: NftTokenMetadata
 }
 
