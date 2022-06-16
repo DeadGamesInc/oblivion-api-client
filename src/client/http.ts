@@ -117,7 +117,7 @@ const toRelease = (rawRelease: RawRelease): Release =>
     price: new BigNumber(rawRelease.price),
     endDate: parseInt(rawRelease.endDate),
     treasury: Object.fromEntries(
-      rawRelease.treasuryAddresses.map((address, i) => [address, rawRelease.treasuryAllocations[i]]),
+      rawRelease.treasuryAddresses.map((address, i) => [address, rawRelease.treasuryAllocations[i] / 100]),
     ),
   }
 
