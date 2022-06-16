@@ -79,7 +79,7 @@ var toNftToken = function (rawToken) {
     return rawToken && __assign(__assign({}, rawToken), { id: rawToken.tokenId });
 };
 var toRelease = function (rawRelease) {
-    return rawRelease && __assign(__assign({}, rawRelease), { price: new BigNumber(rawRelease.price), endDate: parseInt(rawRelease.endDate), treasury: Object.fromEntries(rawRelease.treasuryAddresses.map(function (address, i) { return [address, rawRelease.treasuryAllocations[i]]; })) });
+    return rawRelease && __assign(__assign({}, rawRelease), { price: new BigNumber(rawRelease.price), endDate: parseInt(rawRelease.endDate), treasury: Object.fromEntries(rawRelease.treasuryAddresses.map(function (address, i) { return [address, rawRelease.treasuryAllocations[i] / 100]; })) });
 };
 var OblivionHTTPClient = /** @class */ (function () {
     function OblivionHTTPClient(config) {
