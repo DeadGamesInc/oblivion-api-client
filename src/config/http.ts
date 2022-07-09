@@ -4,12 +4,14 @@ import urlJoin from '../utils/urlJoin'
 const endpoints: Record<ChainId, string> = {
   [ChainId.BSC]: 'https://api.oblivion.art',
   [ChainId.BSCTestnet]: 'https://api.oblivion.art',
+  [ChainId.Nervos]: 'https://api.oblivion.art',
   [ChainId.NervosTestnet]: 'https://api.oblivion.art',
 }
 
 const basePaths: Record<ChainId, string> = {
   [ChainId.BSC]: 'bsc',
   [ChainId.BSCTestnet]: 'bsc_testnet',
+  [ChainId.Nervos]: 'nervos',
   [ChainId.NervosTestnet]: 'nervos_testnet',
 }
 

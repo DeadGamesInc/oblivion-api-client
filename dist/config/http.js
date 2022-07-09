@@ -4,11 +4,13 @@ import urlJoin from '../utils/urlJoin';
 var endpoints = (_a = {},
     _a[ChainId.BSC] = 'https://api.oblivion.art',
     _a[ChainId.BSCTestnet] = 'https://api.oblivion.art',
+    _a[ChainId.Nervos] = 'https://api.oblivion.art',
     _a[ChainId.NervosTestnet] = 'https://api.oblivion.art',
     _a);
 var basePaths = (_b = {},
     _b[ChainId.BSC] = 'bsc',
     _b[ChainId.BSCTestnet] = 'bsc_testnet',
+    _b[ChainId.Nervos] = 'nervos',
     _b[ChainId.NervosTestnet] = 'nervos_testnet',
     _b);
 export var getApiEndpoint = function (chainId) { return endpoints[chainId]; };
