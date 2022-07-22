@@ -6,6 +6,7 @@ const endpoints: Record<ChainId, string> = {
   [ChainId.BSCTestnet]: 'https://api.oblivion.art',
   [ChainId.Nervos]: 'https://api.oblivion.art',
   [ChainId.NervosTestnet]: 'https://api.oblivion.art',
+  [ChainId.MaticTestnet]: 'https://api.oblivion.art',
 }
 
 const basePaths: Record<ChainId, string> = {
@@ -13,6 +14,7 @@ const basePaths: Record<ChainId, string> = {
   [ChainId.BSCTestnet]: 'bsc_testnet',
   [ChainId.Nervos]: 'nervos',
   [ChainId.NervosTestnet]: 'nervos_testnet',
+  [ChainId.MaticTestnet]: 'matic_testnet',
 }
 
 export const getApiEndpoint = (chainId: ChainId): string => endpoints[chainId]
