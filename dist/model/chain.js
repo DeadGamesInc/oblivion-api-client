@@ -5,5 +5,6 @@ export var ChainId;
     ChainId[ChainId["Nervos"] = 71402] = "Nervos";
     ChainId[ChainId["NervosTestnet"] = 71401] = "NervosTestnet";
     ChainId[ChainId["MaticTestnet"] = 80001] = "MaticTestnet";
+    ChainId[ChainId["Matic"] = 137] = "Matic";
 })(ChainId || (ChainId = {}));
 export default ChainId;
