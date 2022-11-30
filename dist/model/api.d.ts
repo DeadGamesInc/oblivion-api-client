@@ -24,6 +24,8 @@ export interface OblivionListingAPI {
     getOpenOffers: (version: any, listingId: number) => Promise<Offer[]>;
     getOffer: (version: number, listingId: number, paymentTokenAddress: string, offerId: number) => Promise<Offer | undefined>;
     refreshOffer: (version: number, listingId: number, paymentTokenAddress: string, offerId: number) => Promise<Offer | undefined>;
+    getOffer1155: (listingId: number, paymentTokenAddress: string, offerId: number) => Promise<Offer | undefined>;
+    refreshOffer1155: (listingId: number, paymentTokenAddress: string, offerId: number) => Promise<Offer | undefined>;
 }
 export interface OblivionSalesAPI {
     getSales: () => Promise<Sale[]>;
