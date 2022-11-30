@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { Address } from './common';
-export default interface Release {
+export interface ReleaseBase {
     id: number;
     owner: Address;
     nft: Address;
@@ -14,6 +14,11 @@ export default interface Release {
     selectable: boolean;
     whitelisted: boolean;
     ended: boolean;
-    usesReviveRug: boolean;
     treasury: Record<Address, number>;
+}
+export default interface Release extends ReleaseBase {
+    usesReviveRug: boolean;
+}
+export interface Release1155 extends ReleaseBase {
+    tokenId: number;
 }

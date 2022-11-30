@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 
 import { getApiBaseUrl } from '../config/http'
 import OblivionAPI from '../model/api'
-import { Listing, Offer, Nft, NftToken, TopOffer, ListingDto, SaleInformation } from '../model'
+import { Listing, Offer, Nft, NftToken, TopOffer, ListingDto, SaleInformation, Release1155 } from '../model'
 import { HTTPAPICaller, getReturnUndefinedOn404Config } from '../utils/http'
 import Collection from '../model/collection'
 import PaymentToken from '../model/paymentToken'
@@ -111,6 +111,13 @@ interface RawRelease extends Omit<Release, 'price' | 'endDate'> {
   treasuryAllocations: number[]
 }
 
+interface RawRelease1155 extends Omit<Release1155, 'price' | 'endDate'> {
+  price: number
+  endDate: string
+  treasuryAddresses: string[]
+  treasuryAllocations: number[]
+}
+
 const toRelease = (rawRelease: RawRelease): Release =>
   rawRelease && {
     ...rawRelease,
@@ -118,6 +125,16 @@ const toRelease = (rawRelease: RawRelease): Release =>
     endDate: parseInt(rawRelease.endDate),
     treasury: Object.fromEntries(
       rawRelease.treasuryAddresses.map((address, i) => [address, rawRelease.treasuryAllocations[i] / 100]),
+    ),
+  }
+
+const toRelease1155 = (rawRelease1155: RawRelease1155): Release1155 =>
+  rawRelease1155 && {
+    ...rawRelease1155,
+    price: new BigNumber(rawRelease1155.price),
+    endDate: parseInt(rawRelease1155.endDate),
+    treasury: Object.fromEntries(
+      rawRelease1155.treasuryAddresses.map((address, i) => [address, rawRelease1155.treasuryAllocations[i] / 100]),
     ),
   }
 
@@ -198,9 +215,27 @@ export default class OblivionHTTPClient implements OblivionAPI {
     return toOffer(offer)
   }
 
+  async getOffer1155(listingId: number, paymentTokenAddress: string, offerId: number): Promise<Offer | undefined> {
+    const offer: RawOffer = await this.http.get(
+      join('getOffer1155', listingId, paymentTokenAddress, offerId),
+      getReturnUndefinedOn404Config(),
+    )
+
+    return toOffer(offer)
+  }
+
   async refreshOffer(version: number, listingId: number, paymentTokenAddress: string, offerId: number): Promise<Offer | undefined> {
     const offer: RawOffer = await this.http.get(
       join('refreshOffer', version, listingId, paymentTokenAddress, offerId),
+      getReturnUndefinedOn404Config(),
+    )
+
+    return toOffer(offer)
+  }
+
+  async refreshOffer1155(listingId: number, paymentTokenAddress: string, offerId: number): Promise<Offer | undefined> {
+    const offer: RawOffer = await this.http.get(
+      join('refreshOffer1155', listingId, paymentTokenAddress, offerId),
       getReturnUndefinedOn404Config(),
     )
 
@@ -282,6 +317,10 @@ export default class OblivionHTTPClient implements OblivionAPI {
     return this.callPluralApi('getReleases', toRelease)
   }
 
+  getReleases1155(): Promise<Release1155[]> {
+    return this.callPluralApi('getReleases1155', toRelease1155)
+  }
+
   getUserReleases(address: string): Promise<Release[]> {
     return this.callPluralApi(join('getUserReleases', address), toRelease)
   }
@@ -289,6 +328,16 @@ export default class OblivionHTTPClient implements OblivionAPI {
   async getRelease(releaseId: number): Promise<Release | undefined> {
     const release: RawRelease = await this.http.get(join('getRelease', releaseId), getReturnUndefinedOn404Config())
     return toRelease(release)
+  }
+
+  async getRelease1155(releaseId: number): Promise<Release1155 | undefined> {
+    const release: RawRelease1155 = await this.http.get(join('getRelease1155', releaseId), getReturnUndefinedOn404Config())
+    return toRelease1155(release)
+  }
+
+  async refreshRelease1155(releaseId: number): Promise<Release1155 | undefined> {
+    const release: RawRelease1155 = await this.http.get(join('refreshRelease1155', releaseId), getReturnUndefinedOn404Config())
+    return toRelease1155(release)
   }
 
   async refreshRelease(releaseId: number): Promise<Release | undefined> {

@@ -2,7 +2,7 @@ import Collection from './collection'
 import { Listing, ListingDto, Offer } from './listing'
 import { Nft, NftToken } from './nft'
 import PaymentToken from './paymentToken'
-import Release from './release'
+import Release, { Release1155 } from './release'
 import Sale from './sale'
 import VolumeReport from "./volumeReport";
 
@@ -50,8 +50,11 @@ export interface OblivionCollectionAPI {
 export interface OblivionReleaseAPI {
   getTotalReleases: () => Promise<number>
   getReleases: () => Promise<Release[]>
+  getReleases1155: () => Promise<Release1155[]>
   getUserReleases: (address: string) => Promise<Release[]>
   getRelease: (releaseId: number) => Promise<Release | undefined>
+  getRelease1155: (releaseId: number) => Promise<Release1155 | undefined>
+  refreshRelease1155: (releaseId: number) => Promise<Release1155 | undefined>
   refreshRelease: (releaseId: number) => Promise<Release | undefined>
 }
 

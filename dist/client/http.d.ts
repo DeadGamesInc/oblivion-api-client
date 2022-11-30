@@ -1,5 +1,5 @@
 import OblivionAPI from '../model/api';
-import { Listing, Offer, Nft, NftToken, ListingDto } from '../model';
+import { Listing, Offer, Nft, NftToken, ListingDto, Release1155 } from '../model';
 import Collection from '../model/collection';
 import PaymentToken from '../model/paymentToken';
 import Release from '../model/release';
@@ -28,7 +28,9 @@ export default class OblivionHTTPClient implements OblivionAPI {
     getUserOpenListings(walletAddress: string): Promise<ListingDto[]>;
     private callGetOffersApi;
     getOffer(version: number, listingId: number, paymentTokenAddress: string, offerId: number): Promise<Offer | undefined>;
+    getOffer1155(listingId: number, paymentTokenAddress: string, offerId: number): Promise<Offer | undefined>;
     refreshOffer(version: number, listingId: number, paymentTokenAddress: string, offerId: number): Promise<Offer | undefined>;
+    refreshOffer1155(listingId: number, paymentTokenAddress: string, offerId: number): Promise<Offer | undefined>;
     getOffers(version: number, listingId: number): Promise<Offer[]>;
     getUserOffers(address: string): Promise<Offer[]>;
     getOpenOffers(version: number, listingId: number): Promise<Offer[]>;
@@ -46,8 +48,11 @@ export default class OblivionHTTPClient implements OblivionAPI {
     refreshCollection(collectionId: number): Promise<Collection | undefined>;
     getTotalReleases(): Promise<number>;
     getReleases(): Promise<Release[]>;
+    getReleases1155(): Promise<Release1155[]>;
     getUserReleases(address: string): Promise<Release[]>;
     getRelease(releaseId: number): Promise<Release | undefined>;
+    getRelease1155(releaseId: number): Promise<Release1155 | undefined>;
+    refreshRelease1155(releaseId: number): Promise<Release1155 | undefined>;
     refreshRelease(releaseId: number): Promise<Release | undefined>;
     getPaymentTokens(): Promise<PaymentToken[]>;
     get24HourVolume(): Promise<VolumeReport>;

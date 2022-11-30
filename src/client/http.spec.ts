@@ -235,6 +235,15 @@ describe('Release APIs', () => {
     releases.forEach((release) => expect(release).toMatchSchema(releaseSchema))
   })
 
+  const releaseSchema1155 = schemaProvider.getSchemaForSymbol('Release1155')
+  it('getReleases1155', async () => {
+    const releases = await client.getReleases1155()
+
+    expect(releases).not.toBeUndefined()
+    expect(releases.length).toBeGreaterThan(0)
+    releases.forEach((release) => expect(release).toMatchSchema(releaseSchema1155))
+  })
+
   it('getUserReleases', async () => {
     const releases = await client.getUserReleases('0xB8C1FFF8b915232067c1e7449870e397E43B143b')
 
