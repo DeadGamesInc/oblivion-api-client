@@ -11,13 +11,13 @@ export interface ReleaseBase {
     maxQuantity: number;
     endDate: number;
     discount: number;
-    selectable: boolean;
     whitelisted: boolean;
     ended: boolean;
     treasury: Record<Address, number>;
 }
 export default interface Release extends ReleaseBase {
     usesReviveRug: boolean;
+    selectable: boolean;
 }
 export interface Release1155 extends ReleaseBase {
     tokenId: number;
